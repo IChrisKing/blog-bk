@@ -5,4 +5,9 @@ db.json
 node_modules/
 public/
 .deploy*/
+package-lock.json
+package.json
 themes/
+scaffolds/
+_config.yml
+
