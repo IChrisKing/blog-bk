@@ -68,7 +68,7 @@ pagination_dir: page
 #theme: yaht
 #theme: next
 #theme: maupassant
-theme: hexo-theme-yelee
+theme: yelee
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
