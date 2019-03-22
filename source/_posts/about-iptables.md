@@ -1,12 +1,12 @@
 ---
-title: iptables在anet项目中的运用
+title: cjdns源码分析--iptables在cjdns项目中的运用
 category:
   - net
   - iptables
 tags:
   - iptables
   - linux
-description: "结合anet项目中，policy执行模块的实现，来分析一下简单的iptables命令"
+description: "结合cjdns项目中，policy执行模块的实现，来分析一下简单的iptables命令"
 date: 2017-04-27 11:20:05
 ---
 
@@ -209,10 +209,10 @@ iptables -t mangle -A PREROUTING -p tcp --dport 22 -j MARK --set-mark 2
 
 ### 自定义规则链
 自定义链，最终要应用于默认链上，才能起作用。
-iptables -N ANET_INPUT    --自定义一条名为ANET_INPUT的规则链
-iptables -I INPUT -j ANET_INPUT;  --将ANET_INPUT应用到INPUT规则链上
+iptables -N CJDNS_INPUT    --自定义一条名为CJDNS_INPUT的规则链
+iptables -I INPUT -j CJDNS_INPUT;  --将CJDNS_INPUT应用到INPUT规则链上
 
-## anet项目中的应用
+## cjdns项目中的应用
 ### rule_flush方法中的使用
 #### 源码
 ```
@@ -224,42 +224,42 @@ static int Policy_firewall_flush_linux(struct Policy_pvt* policy)
     }
 
     /* Remove all old rules */
-    const char* flushAll = "iptables -F ANET_INPUT;"
-                         "iptables -D INPUT -j ANET_INPUT;"
-                         "iptables -X ANET_INPUT;"
-                         "iptables -F ANET_OUTPUT;"
-                         "iptables -D OUTPUT -j ANET_OUTPUT;"
-                         "iptables -X ANET_OUTPUT;"
-                         "ip6tables -F ANET_INPUT;"
-                         "ip6tables -D INPUT -j ANET_INPUT;"
-                         "ip6tables -X ANET_INPUT;"
-                         "ip6tables -F ANET_OUTPUT;"
-                         "ip6tables -D OUTPUT -j ANET_OUTPUT;"
-                         "ip6tables -X ANET_OUTPUT;";
+    const char* flushAll = "iptables -F CJDNS_INPUT;"
+                         "iptables -D INPUT -j CJDNS_INPUT;"
+                         "iptables -X CJDNS_INPUT;"
+                         "iptables -F CJDNS_OUTPUT;"
+                         "iptables -D OUTPUT -j CJDNS_OUTPUT;"
+                         "iptables -X CJDNS_OUTPUT;"
+                         "ip6tables -F CJDNS_INPUT;"
+                         "ip6tables -D INPUT -j CJDNS_INPUT;"
+                         "ip6tables -X CJDNS_INPUT;"
+                         "ip6tables -F CJDNS_OUTPUT;"
+                         "ip6tables -D OUTPUT -j CJDNS_OUTPUT;"
+                         "ip6tables -X CJDNS_OUTPUT;";
     ret = system(flushAll);
     return ret;
 }
 ```
 #### 命令分析
-* iptables -F ANET_INPUT;
-删除ANET_INPUT规则链中的所有规则
-* iptables -D INPUT -j ANET_INPUT;
-将ANET_INPUT规则链从INPUT规则链上删除
-* iptables -X ANET_INPUT;
-删除ANET_INPUT规则链
+* iptables -F CJDNS_INPUT;
+删除CJDNS_INPUT规则链中的所有规则
+* iptables -D INPUT -j CJDNS_INPUT;
+将CJDNS_INPUT规则链从INPUT规则链上删除
+* iptables -X CJDNS_INPUT;
+删除CJDNS_INPUT规则链
 ```
-iptables -F ANET_OUTPUT;
-iptables -D OUTPUT -j ANET_OUTPUT;
-iptables -X ANET_OUTPUT;
+iptables -F CJDNS_OUTPUT;
+iptables -D OUTPUT -j CJDNS_OUTPUT;
+iptables -X CJDNS_OUTPUT;
 ```
 与上面三条类似
 ```
-"ip6tables -F ANET_INPUT;"
-"ip6tables -D INPUT -j ANET_INPUT;"
-"ip6tables -X ANET_INPUT;"
-"ip6tables -F ANET_OUTPUT;"
-"ip6tables -D OUTPUT -j ANET_OUTPUT;"
-"ip6tables -X ANET_OUTPUT;";
+"ip6tables -F CJDNS_INPUT;"
+"ip6tables -D INPUT -j CJDNS_INPUT;"
+"ip6tables -X CJDNS_INPUT;"
+"ip6tables -F CJDNS_OUTPUT;"
+"ip6tables -D OUTPUT -j CJDNS_OUTPUT;"
+"ip6tables -X CJDNS_OUTPUT;";
 ```
 与上面六条类似，但作用于ipv6
 
@@ -274,25 +274,25 @@ static int Policy_firewall_linux(struct Policy_pvt* policy,
     }
 
     /* Remove all old rules */
-    const char* initAll = "iptables -F ANET_INPUT;"
-                         "iptables -D INPUT -j ANET_INPUT;"
-                         "iptables -X ANET_INPUT;"
-                         "iptables -N ANET_INPUT;"
-                         "iptables -I INPUT -j ANET_INPUT;"
-                         "iptables -F ANET_OUTPUT;"
-                         "iptables -D OUTPUT -j ANET_OUTPUT;"
-                         "iptables -N ANET_OUTPUT;"
-                         "iptables -I OUTPUT -j ANET_OUTPUT;"
-                         "ip6tables -F ANET_INPUT;"
-                         "ip6tables -D INPUT -j ANET_INPUT;"
-                         "ip6tables -X ANET_INPUT;"
-                         "ip6tables -N ANET_INPUT;"
-                         "ip6tables -I INPUT -j ANET_INPUT;"
-                         "ip6tables -F ANET_OUTPUT;"
-                         "ip6tables -D OUTPUT -j ANET_OUTPUT;"
-                         "ip6tables -X ANET_OUTPUT;"
-                         "ip6tables -N ANET_OUTPUT;"
-                         "ip6tables -I OUTPUT -j ANET_OUTPUT;";
+    const char* initAll = "iptables -F CJDNS_INPUT;"
+                         "iptables -D INPUT -j CJDNS_INPUT;"
+                         "iptables -X CJDNS_INPUT;"
+                         "iptables -N CJDNS_INPUT;"
+                         "iptables -I INPUT -j CJDNS_INPUT;"
+                         "iptables -F CJDNS_OUTPUT;"
+                         "iptables -D OUTPUT -j CJDNS_OUTPUT;"
+                         "iptables -N CJDNS_OUTPUT;"
+                         "iptables -I OUTPUT -j CJDNS_OUTPUT;"
+                         "ip6tables -F CJDNS_INPUT;"
+                         "ip6tables -D INPUT -j CJDNS_INPUT;"
+                         "ip6tables -X CJDNS_INPUT;"
+                         "ip6tables -N CJDNS_INPUT;"
+                         "ip6tables -I INPUT -j CJDNS_INPUT;"
+                         "ip6tables -F CJDNS_OUTPUT;"
+                         "ip6tables -D OUTPUT -j CJDNS_OUTPUT;"
+                         "ip6tables -X CJDNS_OUTPUT;"
+                         "ip6tables -N CJDNS_OUTPUT;"
+                         "ip6tables -I OUTPUT -j CJDNS_OUTPUT;";
     ret = system(initAll);
 
     const char* fmt = "%s -A %s %s -s %s -d %s -j %s";
@@ -315,10 +315,10 @@ static int Policy_firewall_linux(struct Policy_pvt* policy,
     for (int i = 0; i < rules->length; ++i) {
         struct Rule* rule = rules->rules[i];
         if (rule->location == Policy_INPUT) {
-            dir = "ANET_INPUT";
+            dir = "CJDNS_INPUT";
             intf = iface;
         } else {
-            dir = "ANET_OUTPUT";
+            dir = "CJDNS_OUTPUT";
             intf = oface;
         }
 
@@ -385,19 +385,19 @@ static int Policy_firewall_linux(struct Policy_pvt* policy,
 
     /* firewall header */
     snprintf(buff, sizeof(buff),
-             "iptables -I ANET_INPUT %s -m state --state RELATED,ESTABLISHED -j ACCEPT",
+             "iptables -I CJDNS_INPUT %s -m state --state RELATED,ESTABLISHED -j ACCEPT",
              iface);
     ret = system(buff);
     snprintf(buff, sizeof(buff),
-             "ip6tables -I ANET_INPUT %s -m state --state RELATED,ESTABLISHED -j ACCEPT",
+             "ip6tables -I CJDNS_INPUT %s -m state --state RELATED,ESTABLISHED -j ACCEPT",
              iface);
     ret = system(buff);
     snprintf(buff, sizeof(buff),
-             "iptables -I ANET_OUTPUT %s -m state --state RELATED,ESTABLISHED -j ACCEPT",
+             "iptables -I CJDNS_OUTPUT %s -m state --state RELATED,ESTABLISHED -j ACCEPT",
              oface);
     ret = system(buff);
     snprintf(buff, sizeof(buff),
-             "ip6tables -I ANET_OUTPUT %s -m state --state RELATED,ESTABLISHED -j ACCEPT",
+             "ip6tables -I CJDNS_OUTPUT %s -m state --state RELATED,ESTABLISHED -j ACCEPT",
              oface);
     ret = system(buff);
 
@@ -407,13 +407,13 @@ static int Policy_firewall_linux(struct Policy_pvt* policy,
     } else {
         action = "DROP";
     }
-    snprintf(buff, sizeof(buff), "iptables -A ANET_INPUT %s -j %s", iface, action);
+    snprintf(buff, sizeof(buff), "iptables -A CJDNS_INPUT %s -j %s", iface, action);
     ret = system(buff);
-    snprintf(buff, sizeof(buff), "ip6tables -A ANET_INPUT %s -j %s", iface, action);
+    snprintf(buff, sizeof(buff), "ip6tables -A CJDNS_INPUT %s -j %s", iface, action);
     ret = system(buff);
-    snprintf(buff, sizeof(buff), "iptables -A ANET_OUTPUT %s -j %s", oface, action);
+    snprintf(buff, sizeof(buff), "iptables -A CJDNS_OUTPUT %s -j %s", oface, action);
     ret = system(buff);
-    snprintf(buff, sizeof(buff), "ip6tables -A ANET_OUTPUT %s -j %s", oface, action);
+    snprintf(buff, sizeof(buff), "ip6tables -A CJDNS_OUTPUT %s -j %s", oface, action);
     ret = system(buff);
 
     return ret;
@@ -422,40 +422,40 @@ static int Policy_firewall_linux(struct Policy_pvt* policy,
 这个方法中，对于iptables命令的使用，主要分为四块：
 #### Remove all old rules
 ```
-"iptables -F ANET_INPUT;"
-"iptables -D INPUT -j ANET_INPUT;"
-"iptables -X ANET_INPUT;"
-"iptables -N ANET_INPUT;"
-"iptables -I INPUT -j ANET_INPUT;"
-"iptables -F ANET_OUTPUT;"
-"iptables -D OUTPUT -j ANET_OUTPUT;"
-"iptables -N ANET_OUTPUT;"
-"iptables -I OUTPUT -j ANET_OUTPUT;"
-"ip6tables -F ANET_INPUT;"
-"ip6tables -D INPUT -j ANET_INPUT;"
-"ip6tables -X ANET_INPUT;"
-"ip6tables -N ANET_INPUT;"
-"ip6tables -I INPUT -j ANET_INPUT;"
-"ip6tables -F ANET_OUTPUT;"
-"ip6tables -D OUTPUT -j ANET_OUTPUT;"
-"ip6tables -X ANET_OUTPUT;"
-"ip6tables -N ANET_OUTPUT;"
-"ip6tables -I OUTPUT -j ANET_OUTPUT;";
+"iptables -F CJDNS_INPUT;"
+"iptables -D INPUT -j CJDNS_INPUT;"
+"iptables -X CJDNS_INPUT;"
+"iptables -N CJDNS_INPUT;"
+"iptables -I INPUT -j CJDNS_INPUT;"
+"iptables -F CJDNS_OUTPUT;"
+"iptables -D OUTPUT -j CJDNS_OUTPUT;"
+"iptables -N CJDNS_OUTPUT;"
+"iptables -I OUTPUT -j CJDNS_OUTPUT;"
+"ip6tables -F CJDNS_INPUT;"
+"ip6tables -D INPUT -j CJDNS_INPUT;"
+"ip6tables -X CJDNS_INPUT;"
+"ip6tables -N CJDNS_INPUT;"
+"ip6tables -I INPUT -j CJDNS_INPUT;"
+"ip6tables -F CJDNS_OUTPUT;"
+"ip6tables -D OUTPUT -j CJDNS_OUTPUT;"
+"ip6tables -X CJDNS_OUTPUT;"
+"ip6tables -N CJDNS_OUTPUT;"
+"ip6tables -I OUTPUT -j CJDNS_OUTPUT;";
 ```
-以ANET_INPUT为例，这一部分首先做了和rule_flush一样的操作，删除相关数据
+以CJDNS_INPUT为例，这一部分首先做了和rule_flush一样的操作，删除相关数据
 ```
-"iptables -F ANET_INPUT;"
-"iptables -D INPUT -j ANET_INPUT;"
-"iptables -X ANET_INPUT;"
+"iptables -F CJDNS_INPUT;"
+"iptables -D INPUT -j CJDNS_INPUT;"
+"iptables -X CJDNS_INPUT;"
 ```
 然后，
-新建自定义规则链ANET_INPUT
+新建自定义规则链CJDNS_INPUT
 ```
-iptables -N ANET_INPUT;
+iptables -N CJDNS_INPUT;
 ```
 将它应用到INPUT规则链上
 ```
-iptables -I INPUT -j ANET_INPUT;
+iptables -I INPUT -j CJDNS_INPUT;
 ```
 
 #### 根据规则，拼接iptables命令
@@ -480,10 +480,10 @@ iptables -I INPUT -j ANET_INPUT;
     for (int i = 0; i < rules->length; ++i) {
         struct Rule* rule = rules->rules[i];
         if (rule->location == Policy_INPUT) {
-            dir = "ANET_INPUT";
+            dir = "CJDNS_INPUT";
             intf = iface;
         } else {
-            dir = "ANET_OUTPUT";
+            dir = "CJDNS_OUTPUT";
             intf = oface;
         }
 
@@ -550,25 +550,25 @@ iptables -I INPUT -j ANET_INPUT;
 ```
 在这一过程中，会根据策略规则，获取相关信息，最终拼接出格式如下的规则。
 ```
-iptables -A ANET_INPUT -i tun0 -s srcip/srcport -d dstip/dstport -j ACCEPT
+iptables -A CJDNS_INPUT -i tun0 -s srcip/srcport -d dstip/dstport -j ACCEPT
 ```
 
 #### firewall header
 ```
     snprintf(buff, sizeof(buff),
-             "iptables -I ANET_INPUT %s -m state --state RELATED,ESTABLISHED -j ACCEPT",
+             "iptables -I CJDNS_INPUT %s -m state --state RELATED,ESTABLISHED -j ACCEPT",
              iface);
     ret = system(buff);
     snprintf(buff, sizeof(buff),
-             "ip6tables -I ANET_INPUT %s -m state --state RELATED,ESTABLISHED -j ACCEPT",
+             "ip6tables -I CJDNS_INPUT %s -m state --state RELATED,ESTABLISHED -j ACCEPT",
              iface);
     ret = system(buff);
     snprintf(buff, sizeof(buff),
-             "iptables -I ANET_OUTPUT %s -m state --state RELATED,ESTABLISHED -j ACCEPT",
+             "iptables -I CJDNS_OUTPUT %s -m state --state RELATED,ESTABLISHED -j ACCEPT",
              oface);
     ret = system(buff);
     snprintf(buff, sizeof(buff),
-             "ip6tables -I ANET_OUTPUT %s -m state --state RELATED,ESTABLISHED -j ACCEPT",
+             "ip6tables -I CJDNS_OUTPUT %s -m state --state RELATED,ESTABLISHED -j ACCEPT",
              oface);
     ret = system(buff);
 ```
@@ -582,13 +582,13 @@ iptables -A ANET_INPUT -i tun0 -s srcip/srcport -d dstip/dstport -j ACCEPT
     } else {
         action = "DROP";
     }
-    snprintf(buff, sizeof(buff), "iptables -A ANET_INPUT %s -j %s", iface, action);
+    snprintf(buff, sizeof(buff), "iptables -A CJDNS_INPUT %s -j %s", iface, action);
     ret = system(buff);
-    snprintf(buff, sizeof(buff), "ip6tables -A ANET_INPUT %s -j %s", iface, action);
+    snprintf(buff, sizeof(buff), "ip6tables -A CJDNS_INPUT %s -j %s", iface, action);
     ret = system(buff);
-    snprintf(buff, sizeof(buff), "iptables -A ANET_OUTPUT %s -j %s", oface, action);
+    snprintf(buff, sizeof(buff), "iptables -A CJDNS_OUTPUT %s -j %s", oface, action);
     ret = system(buff);
-    snprintf(buff, sizeof(buff), "ip6tables -A ANET_OUTPUT %s -j %s", oface, action);
+    snprintf(buff, sizeof(buff), "ip6tables -A CJDNS_OUTPUT %s -j %s", oface, action);
     ret = system(buff);
 ```
 最后这四条用于设置默认操作，-A参数保证它们会加入到规则表的最后。

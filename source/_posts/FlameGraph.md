@@ -21,8 +21,8 @@ export PATH=$PATH:/opt/FlameGraph
 ```
 ## 查找程序的pid ##
 ```
-$ ps -aux|grep anet
-nobody   31779  0.2  0.0  19208  4000 pts/37   S    15:35   0:10 /home/name/anet/cjdns/anet core /tmp client-core-puux8w0hdr7y5kdq9u12qqz7s7cgw5
+$ ps -aux|grep cjdroute
+nobody   31779  0.2  0.0  19208  4000 pts/37   S    15:35   0:10 /home/name/cjdroute/cjdns/cjdroute core /tmp client-core-puux8w0hdr7y5kdq9u12qqz7s7cgw5
 ```
 pid为31779
 

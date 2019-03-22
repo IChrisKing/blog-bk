@@ -1,5 +1,5 @@
 ---
-title: 使用SocketAddress来维护的EndpointsBySockaddr map机制中EndpointsBySockaddr session的建立过程
+title: cjdns源码分析--使用SocketAddress来维护的EndpointsBySockaddr map机制中EndpointsBySockaddr session的建立过程
 category:
   - cjdns
   - cjdns源码分析
