@@ -1035,7 +1035,7 @@ static Iface_DEFUN ip4FromNode(struct Message* message,
                   conn->connectionIp4Alloc, conn->connectionIp4Prefix);
         return 0;
     }
-    Log_debug(context->logger, "jin Got message with address [%d.%d.%d.%d] for connection "
+    Log_debug(context->logger, "chris Got message with address [%d.%d.%d.%d] for connection "
                                    "[%d.%d.%d.%d/%d:%d]",
                   header->sourceAddr[0], header->sourceAddr[1],
                   header->sourceAddr[2], header->sourceAddr[3],

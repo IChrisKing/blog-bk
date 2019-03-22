@@ -37,15 +37,15 @@ import android.os.ServiceManager;
 ```
 private void doKeyguardLocked(Bundle options) {
        
-        //by jin
+        //by chris
        try {
             IMountService service = getMountService();//條用函數，獲取MountService
             boolean isGestureKeyExist = (service.isGestureKeyExist() == 0)? true:false;//這個isGestureKeyExist就是我們後面要添加到IMountService.java的函數
-            Log.d("jin", "isGestureKeyExist " + service.isGestureKeyExist());
+            Log.d("chris", "isGestureKeyExist " + service.isGestureKeyExist());
             if (ActivityManagerNative.getDefault().getCurrentUser().getUserHandle().getIdentifier() == UserHandle.USER_WORK && !isGestureKeyExist) {
                 if (DEBUG)
                     Log.d(TAG, "doKeyguard: not showing because user work");
-                Log.d("jin", "startAnromLock");
+                Log.d("chris", "startAnromLock");
                 startAnromLock();
                 return;
             }
@@ -65,7 +65,7 @@ public int isGestureKeyExist() throws RemoteException;
 ### 2.這個函數的實現
 ```
 public int isGestureKeyExist() throws RemoteException {
-                Slog.d("jin","isGestureKeyExist imountservice");
+                Slog.d("chris","isGestureKeyExist imountservice");
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
                 int _result;
@@ -114,11 +114,11 @@ public boolean onTransact(int code, Parcel data, Parcel reply,
 ```
     @Override
     public int isGestureKeyExist()throws RemoteException{
-        Slog.d("jin","isGestureKeyExist mountservice");
+        Slog.d("chris","isGestureKeyExist mountservice");
         final NativeDaemonEvent event;
         try{
             event = mConnector.execute("cryptfs", "isgesturekeyexist");
-            Slog.d("jin","isGestureKeyExist mountservice. result is " + Integer.parseInt(event.getMessage()));
+            Slog.d("chris","isGestureKeyExist mountservice. result is " + Integer.parseInt(event.getMessage()));
             return Integer.parseInt(event.getMessage());
         }catch(NativeDaemonConnectorException e){
             return e.getCode();

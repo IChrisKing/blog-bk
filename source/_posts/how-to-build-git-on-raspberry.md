@@ -92,8 +92,8 @@ git pull
 ```
 #### 对项目做修改并递交
 ```
-jinwh@jinwh-office ~/respberry/git/test $ echo "test test test git" > test
-jinwh@jinwh-office ~/respberry/git/test $ git status
+chris@chris-office ~/respberry/git/test $ echo "test test test git" > test
+chris@chris-office ~/respberry/git/test $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
 Changes not staged for commit:
@@ -103,11 +103,11 @@ Changes not staged for commit:
 	modified:   test
 
 no changes added to commit (use "git add" and/or "git commit -a")
-jinwh@jinwh-office ~/respberry/git/test $ git add test
-jinwh@jinwh-office ~/respberry/git/test $ git commit -m "test git"
+chris@chris-office ~/respberry/git/test $ git add test
+chris@chris-office ~/respberry/git/test $ git commit -m "test git"
 [master 1132719] test git
  1 file changed, 1 insertion(+), 1 deletion(-)
-jinwh@jinwh-office ~/respberry/git/test $ git push origin master 
+chris@chris-office ~/respberry/git/test $ git push origin master 
 git@pi-raspberry's password: 
 Counting objects: 3, done.
 Writing objects: 100% (3/3), 250 bytes | 0 bytes/s, done.

@@ -27,7 +27,7 @@ packages/services/Telephony/src/com/android/phone/PhoneGlobals.java
 
 EVENT_CALL_WAITING
 ```
-jinwh@jinwh-office ~/rom7.0/anrom7.0/frameworks $ grep -r "EVENT_CALL_WAITING"
+chris@chris-office ~/rom7.0/anrom7.0/frameworks $ grep -r "EVENT_CALL_WAITING"
 opt/telephony/src/java/com/android/internal/telephony/CallTracker.java:    protected static final int EVENT_CALL_WAITING_INFO_CDMA        = 15;
 opt/telephony/src/java/com/android/internal/telephony/GsmCdmaCallTracker.java:            mCi.registerForCallWaitingInfo(this, EVENT_CALL_WAITING_INFO_CDMA, null);
 opt/telephony/src/java/com/android/internal/telephony/GsmCdmaCallTracker.java:            case EVENT_CALL_WAITING_INFO_CDMA:
@@ -41,7 +41,7 @@ opt/telephony/tests/telephonytests/src/com/android/internal/telephony/CallManage
 ```
 
 ```
-jinwh@jinwh-office ~/rom7.0/anrom7.0/packages $ grep -r "EVENT_CALL_"
+chris@chris-office ~/rom7.0/anrom7.0/packages $ grep -r "EVENT_CALL_"
 services/Telecomm/src/com/android/server/telecom/ConnectionServiceWrapper.java:                        call.onConnectionEvent(Connection.EVENT_CALL_MERGE_FAILED, null);
 services/Telecomm/tests/src/com/android/server/telecom/tests/BasicCallTests.java:                eq(testCall2.mCallId), eq(Connection.EVENT_CALL_MERGE_FAILED), any(Bundle.class));
 services/Telecomm/tests/src/com/android/server/telecom/tests/BasicCallTests.java:                eq(testCall2.mCallId), eq(Connection.EVENT_CALL_MERGE_FAILED), any(Bundle.class));
@@ -404,7 +404,7 @@ public void registerCallback(Callback callback) {
 ```
 private void updateCall(Call call, boolean videoProviderChanged) {
         if (!mInCallServices.isEmpty()) {
-            Log.i(this, "jin InCallController.java updateCall {Call: %s}",
+            Log.i(this, "chris InCallController.java updateCall {Call: %s}",
                         (call != null ? call.toString() :"null"));
 ```
 
@@ -433,13 +433,13 @@ packages/services/Telecomm/src/con/android/server/telecom/InCallController.java 
 ```
 private void updateCall(Call call, boolean videoProviderChanged) {
         if (!mInCallServices.isEmpty()) {
-            Log.i(this, "jin InCallController.java updateCall {Call: %s}",
+            Log.i(this, "chris InCallController.java updateCall {Call: %s}",
                         (call != null ? call.toString() :"null"));
 ```
 调用它的位置应该是
 ```
     public void onCallStateChanged(Call call, int oldState, int newState) {
-        Log.d("jin","jin InCallController.java onCallStateChanged "
+        Log.d("chris","InCallController.java onCallStateChanged "
                 "calling function updateCall");
         updateCall(call);
     }
@@ -922,31 +922,31 @@ public int getRealState() {
             case SELECT_PHONE_ACCOUNT:
             case ABORTED:
             case PULLING:
-                Log.i(LOG_TAG,"jin noti pacCall state:" + TelephonyManager.REAL_CALL_STATE_IDLE);
+                Log.i(LOG_TAG,"noti pacCall state:" + TelephonyManager.REAL_CALL_STATE_IDLE);
                 return TelephonyManager.REAL_CALL_STATE_IDLE;
             case DIALING:
-            Log.i(LOG_TAG,"jin noti pacCall state:" + TelephonyManager.REAL_CALL_STATE_DIALING);
+            Log.i(LOG_TAG,"noti pacCall state:" + TelephonyManager.REAL_CALL_STATE_DIALING);
                 return TelephonyManager.REAL_CALL_STATE_DIALING
             case RINGING:
-            Log.i(LOG_TAG,"jin noti pacCall state:" + TelephonyManager.REAL_CALL_STATE_RINGING);
+            Log.i(LOG_TAG,"noti pacCall state:" + TelephonyManager.REAL_CALL_STATE_RINGING);
                 return TelephonyManager.REAL_CALL_STATE_RINGING;
             case ACTIVE:
-            Log.i(LOG_TAG,"jin noti pacCall state:" + TelephonyManager.REAL_CALL_STATE_ACTIVE);
+            Log.i(LOG_TAG,"noti pacCall state:" + TelephonyManager.REAL_CALL_STATE_ACTIVE);
                 return TelephonyManager.REAL_CALL_STATE_ACTIVE;
             case ON_HOLD:
-            Log.i(LOG_TAG,"jin noti pacCall state:" + TelephonyManager.REAL_CALL_STATE_HOLDING);
+            Log.i(LOG_TAG,"noti pacCall state:" + TelephonyManager.REAL_CALL_STATE_HOLDING);
                 return TelephonyManager.REAL_CALL_STATE_HOLDING;
             case DISCONNECTED:
-            Log.i(LOG_TAG,"jin noti pacCall state:" + TelephonyManager.REAL_CALL_STATE_DISCONNECTED);
+            Log.i(LOG_TAG,"noti pacCall state:" + TelephonyManager.REAL_CALL_STATE_DISCONNECTED);
                 return TelephonyManager.REAL_CALL_STATE_DISCONNECTED;
             case DISCONNECTING:
-            Log.i(LOG_TAG,"jin noti pacCall state:" + TelephonyManager.REAL_CALL_STATE_DISCONNECTING);
+            Log.i(LOG_TAG,"noti pacCall state:" + TelephonyManager.REAL_CALL_STATE_DISCONNECTING);
                 return TelephonyManager.REAL_CALL_STATE_DISCONNECTING;
             default:
-            Log.i(LOG_TAG,"jin noti pacCall state:default");
+            Log.i(LOG_TAG,"noti pacCall state:default");
                 return TelephonyManager.REAL_CALL_STATE_IDLE;
         }
-        Log.i(LOG_TAG,"jin noti pacCall state:nomatch");
+        Log.i(LOG_TAG,"noti pacCall state:nomatch");
         return TelephonyManager.REAL_CALL_STATE_IDLE;
     }
 ```
@@ -955,7 +955,7 @@ public int getRealState() {
 1. frameworks/base/telephony/java/android/telephony/PhoneStateListener.java
 ```
         public void onRealCallStateChanged(int state, String incomingNumber) {
-            log("jin PhoneStateListener onRealCallStateChanged");
+            log("PhoneStateListener onRealCallStateChanged");
             send(LISTEN_REAL_CALL_STATE, state, 0, incomingNumber);
         }
 ```
@@ -973,12 +973,12 @@ public int getRealState() {
                 switch (msg.what) {
 .......................
                     case LISTEN_CALL_STATE:
-                        log("jin PhoneStateListener case LISTEN_CALL_STATE");
+                        log("PhoneStateListener case LISTEN_CALL_STATE");
                         PhoneStateListener.this.onCallStateChanged(msg.arg1, (String)msg.obj);
                         break;
-                    //add by rom - jin
+                    //add by chris
                     case LISTEN_REAL_CALL_STATE:
-                        log("jin PhoneStateListener case LISTEN_REAL_CALL_STATE");
+                        log("PhoneStateListener case LISTEN_REAL_CALL_STATE");
                         PhoneStateListener.this.onRealCallStateChanged(msg.arg1, (String)msg.obj);
                         break;
 
@@ -1027,7 +1027,7 @@ LISTEN_CALL_STATE主要用在了权限判断和条件筛选
 ```
     @Override
     public void notifyPhoneState(Phone sender) {
-        Rlog.d(LOG_TAG, "jin DefaultPhoneNotifier notifyPhoneState")
+        Rlog.d(LOG_TAG, "DefaultPhoneNotifier notifyPhoneState")
         Call ringingCall = sender.getRingingCall();
         int subId = sender.getSubId();
         int phoneId = sender.getPhoneId();
@@ -1037,14 +1037,14 @@ LISTEN_CALL_STATE主要用在了权限判断和条件筛选
         }
         try {
             if (mRegistry != null) {
-                Rlog.d(LOG_TAG, "jin noti DefaultPhoneNotifier notifyPhoneState: mRegistry="
+                Rlog.d(LOG_TAG, "noti DefaultPhoneNotifier notifyPhoneState: mRegistry="
                     + mRegistry + " ss=" + sender.getSignalStrength() + " sender=" + sender
                     + " phoneId" + phoneId + " subId" + subId + " sender.getsate()"
                     + sender.getState() + " incomingNumber" + incomingNumber);
                 //在这里
                 mRegistry.notifyCallStateForPhoneId(phoneId, subId,
                         convertCallState(sender.getState()), incomingNumber);
-                Rlog.d(LOG_TAG, "jin noti DefaultPhoneNotifier notifyRealCallStateForPhoneId: mRegistry="
+                Rlog.d(LOG_TAG, "noti DefaultPhoneNotifier notifyRealCallStateForPhoneId: mRegistry="
                     + mRegistry + " ss=" + sender.getSignalStrength() + " sender=" + sender
                     + " phoneId" + phoneId + " subId" + subId + " ringingCall.getState()"
                     + ringingCall.getState() + " incomingNumber" + incomingNumber);
